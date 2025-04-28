@@ -30,7 +30,7 @@ Task0 - Task4 all use the same texts.csv and calls.csv file as input, where it r
 
 **Description**: The goal of this code is to determine which telephone number spent the longest time on the phone during the period of September 2016. All the records in the calls.csv are from September 2016, therfore we use this dataset to output the solution.
 
-**Approach**: Iterated through the calls list to build a *phone_time* dictionary that stores phone numbers as keys and the total call duration in seconds as the value. For each record in the calls list, we extract two telephone numbers and the call duration and update the *phone_time* dictionary for both *num1* and *num2* using the `get()` method to retrieve the current value (or 0 if they key does not exist) and adds the *duration* to it.
+**Approach**: Iterated through the calls list to build a *phone_time* dictionary that stores phone numbers as keys and the total call duration in seconds as the value. For each record in the calls list, we extract two telephone numbers and the call duration and update the *phone_time* dictionary for both *num1* and *num2* using the `get()` method to retrieve the current value (or 0 if the key does not exist) and adds the *duration* to it.
 
 **Complexity Analysis**:
 
@@ -50,7 +50,7 @@ Task0 - Task4 all use the same texts.csv and calls.csv file as input, where it r
 **Complexity Analysis**:
 
 - **Algorithm**: A single loop runs through each element of the *calls* list once, then we use the python `sorted()` function to sort the set of unique area codes. We finish by calculating the percentage of calls from Bangalore to Bangalore by dividing (to_bangalore_calls / tot_calls).
-- **Big O Notation**: $O(n\log(n))$ where $n$ is the number of elements in the array.
+- **Big O Notation**: $O(n\log(n))$ where $n$ is the number of elements in the *calls* list.
 - **Justification**: The dominant terms are $O(n)$ (from iterating through the *calls* list) and $O(u\log(u))$ (from sorting the unique area codes). Since $u$ (the number of unique area codes) is typically much smaller than $n$ (the number of call records), the overall time complexity can be expressed as $O(n + u\log(u))$, but assuming a worst case scenario where every number of the *calls* list is a unique number, we would then get $O(n + n\log(n))$, which in turn simplifies to Big O of $O(n\log(n))$.
 
 ## Task4
@@ -63,4 +63,4 @@ Task0 - Task4 all use the same texts.csv and calls.csv file as input, where it r
 
 - **Algorithm**: Two loops iterate through the *calls* and *texts* datasets to populate the lists. Each list is then turned into a set to get only the unique numbers. A set subtraction operation is performed to identify telemarketer numbers, followed by sorting the resulting set.
 - **Big O Notation**: $O(n\log(n))$, where $n$ is the number of call records in the *calls* dataset.
-- **Justification**: Iterating through the *calls* and *texts* datasets is $O(n + m)$. Set operations like union and subtraction are $O(a + b)$, where $a$ and $b$ are the sizes of the sets involved, which are subsets of $n$ and $m$. Sorting the telemarketer numbers is $O(k\log(k))$, where $k$ is the number of unique numbers remaining from the subtracting the two sets. In a worst case scenario, every outgoing call would be a unique telemarketer number, which in turn would make $k$ = $n$ when sorting the telemarketer number making the `sorting()` function have a time complexity of $O(n\log(n))$. Since $O(n\log(n))$ is a much faster growth rate compared to $O(n)$, we simplify our worst case Big O notation to simply be $O(n\log(n))$.
+- **Justification**: Iterating through the *calls* and *texts* datasets is $O(n + m)$. Set operations like union and subtraction are $O(a + b)$, where $a$ and $b$ are the sizes of the sets involved, which are subsets of $n$ and $m$. Sorting the telemarketer numbers is $O(k\log(k))$, where $k$ is the number of unique numbers remaining from subtracting the two sets. In a worst case scenario, every outgoing call would be a unique telemarketer number, which in turn would make $k$ = $n$ when sorting the telemarketer number using the `sorting()` function, resulting in a time complexity of $O(n\log(n))$. Since $O(n\log(n))$ represents a faster growth rate compared to $O(n)$, we simplify our worst case Big O notation to $O(n\log(n))$.
