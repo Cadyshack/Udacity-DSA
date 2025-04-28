@@ -19,4 +19,16 @@ Print a message:
 "<telephone number> spent the longest time, <total time> seconds, on the phone during 
 September 2016.".
 """
+# Create an empty dictionary to fill with all telephone numbers as key, and length of time on phone (in seconds) as the value
+phone_time = {}
 
+for record in calls:
+    num1 = record[0]
+    num2 = record[1]
+    duration = int(record[3])
+    phone_time[num1] = phone_time.get(num1, 0) + duration
+    phone_time[num2] = phone_time.get(num2, 0) + duration
+
+phone_with_max_length = max(phone_time, key=phone_time.get)
+
+print(f"{phone_with_max_length} spent the longest time, {phone_time[phone_with_max_length]} seconds, on the phone during September 2016.")

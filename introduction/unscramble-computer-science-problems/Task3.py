@@ -44,3 +44,46 @@ Print the answer as a part of a message::
 to other fixed lines in Bangalore."
 The percentage should have 2 decimal digits
 """
+import re
+
+# tot_calls used as a counter to account for all calls made from Bangalore
+tot_calls = 0
+# to_bangalore_calls used as a counter to track all calls made from Bangalore to Bangalore
+to_bangalore_calls = 0
+# create an empty list to contain all the receiver calls area codes when calls are made from Bangalore
+area_codes = []
+
+for call in calls:
+    if call[0].startswith("(080)"):
+        tot_calls += 1 # increment tot_calls by 1
+        receiver = call[1]
+        
+        if receiver.startswith("("):
+            # Use a regular expression to extract the numbers between parentheses
+            match = re.search(r'\((\d+)\)', receiver) 
+            code = match.group(1) # Extract the matched group
+            area_codes.append(code)
+            if code == "080":
+                # Calls from Bangalore to Bangalore, therefore we increment to_bangalore_calls counter
+                to_bangalore_calls += 1
+        # test if a space " " is found in the receiver number i.e. it's a mobile number
+        elif " " in receiver:
+            area_codes.append(receiver[:4]) # add the first 4 digits of the mobile phone number as the prefix
+        # else it isn't a mobile or a fixed line number, and in this exercise we are left with just telemarketers number
+        # that start with 140
+        else:
+            if receiver[:3] == "140":
+                area_codes.append("140")
+    
+unique_codes = sorted(set(area_codes))
+
+# percentage of calls from fixed lines in Bangalore are made to fixed lines also in Bangalore, rounded to two decimal places
+percent = round(((to_bangalore_calls / tot_calls) * 100), 2)
+
+print("The numbers called by people in Bangalore have codes:")
+for code in unique_codes:
+    print(code)
+
+print(f"{percent} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.")
+
+
