@@ -51,7 +51,7 @@ tot_calls = 0
 # to_bangalore_calls used as a counter to track all calls made from Bangalore to Bangalore
 to_bangalore_calls = 0
 # create an empty list to contain all the receiver calls area codes when calls are made from Bangalore
-area_codes = []
+area_codes = set()
 
 for call in calls:
     if call[0].startswith("(080)"):
@@ -62,20 +62,20 @@ for call in calls:
             # Use a regular expression to extract the numbers between parentheses
             match = re.search(r'\((\d+)\)', receiver) 
             code = match.group(1) # Extract the matched group
-            area_codes.append(code)
+            area_codes.add(code)
             if code == "080":
                 # Calls from Bangalore to Bangalore, therefore we increment to_bangalore_calls counter
                 to_bangalore_calls += 1
         # test if a space " " is found in the receiver number i.e. it's a mobile number
         elif " " in receiver:
-            area_codes.append(receiver[:4]) # add the first 4 digits of the mobile phone number as the prefix
+            area_codes.add(receiver[:4]) # add the first 4 digits of the mobile phone number as the prefix
         # else it isn't a mobile or a fixed line number, and in this exercise we are left with just telemarketers number
         # that start with 140
         else:
             if receiver[:3] == "140":
-                area_codes.append("140")
+                area_codes.add("140")
     
-unique_codes = sorted(set(area_codes))
+unique_codes = sorted(area_codes)
 
 # percentage of calls from fixed lines in Bangalore are made to fixed lines also in Bangalore, rounded to two decimal places
 percent = round(((to_bangalore_calls / tot_calls) * 100), 2)
