@@ -15,14 +15,16 @@ class LRU_Cache:
 
     def __init__(self, capacity: int) -> None:
         """
-        Constructs all the necessary attributes for the LRU_Cache object.
+        Initializes the LRU_Cache with a given capacity.
 
         Parameters:
         -----------
         capacity : int
             The maximum number of items the cache can hold.
         """
-        pass
+        self.capacity = capacity
+        self.cache : OrderedDict[int, Any] = OrderedDict()
+
 
     def get(self, key: int) -> Optional[Any]:
         """
@@ -38,7 +40,13 @@ class LRU_Cache:
         Optional[Any]
             The value associated with the key if it exists, otherwise -1.
         """
-        pass
+        if key not in self.cache:
+            return -1
+        else:
+            # Move the accessed item to the end of the OrderedDict to mark it as recently used
+            self.cache.move_to_end(key)
+            return self.cache[key]
+        
 
     def set(self, key: int, value: Any) -> None:
         """
@@ -53,7 +61,16 @@ class LRU_Cache:
         value : Any
             The value to be associated with the key.
         """
-        pass
+        if key in self.cache:
+            # Update the value and mark it as recently used
+            self.cache.move_to_end(key)
+            self.cache[key] = value
+        else:
+            if len(self.cache) >= self.capacity:
+                # Remove the first (least recently used) item from the cache
+                self.cache.popitem(last=False)
+            # Insert the new key-value pair
+            self.cache[key] = value
 
 
 if __name__ == '__main__':
@@ -65,7 +82,7 @@ if __name__ == '__main__':
     our_cache.set(2, 2)
     our_cache.set(3, 3)
     our_cache.set(4, 4)
-    assert our_cache.get(1) == 1   # Returns 1
+    assert our_cache.get(1) == 1  # Returns 1
     assert our_cache.get(2) == 2   # Returns 2
     assert our_cache.get(9) == -1  # Returns -1 because 9 is not in the cache
 
