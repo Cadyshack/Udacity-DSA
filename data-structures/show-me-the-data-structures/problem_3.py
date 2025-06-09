@@ -113,7 +113,7 @@ def build_huffman_tree(frequency: dict[str, int]) -> HuffmanNode:
     """
     # Create HuffmanNode for each dictionary item
     pq = [HuffmanNode(freq, char) for char, freq in frequency.items()]
-    # Conver to a heap in O(k) time
+    # Convert to a heap in O(k) time
     heapq.heapify(pq)
 
     while len(pq) > 1:
@@ -178,6 +178,7 @@ def huffman_encoding(data: str) -> tuple[str, Optional[HuffmanNode]]:
     Tuple[str, Optional[HuffmanNode]]
         A tuple containing the encoded string and the root of the Huffman Tree.
     """
+    # Special case: given an empty string to encode
     if not data:
         return ("", None)
     
@@ -199,7 +200,6 @@ def huffman_encoding(data: str) -> tuple[str, Optional[HuffmanNode]]:
         encoded_string += huffman_codes[char]
 
     return (encoded_string, tree)
-
 
 def huffman_decoding(encoded_data: str, tree: Optional[HuffmanNode]) -> str:
     """
