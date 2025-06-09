@@ -284,4 +284,10 @@ if __name__ == "__main__":
     decoded = huffman_decoding(encoded, tree)
     assert decoded == s, f"Failed: test 3, encoded = {encoded}, decoded = {decoded}"
 
-    
+    # Test Case 4
+    print("\nTest Case 4: Long string")
+    s = "abcde" * 10000
+    encoded, tree = huffman_encoding(s)
+    assert len(encoded) > 0
+    decoded = huffman_decoding(encoded, tree)
+    assert decoded == s, f"Failed: Test Case 4 using a long string failed"
