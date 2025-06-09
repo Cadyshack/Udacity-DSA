@@ -52,14 +52,6 @@ class HuffmanNode:
     def get_right_child(self) -> Optional['HuffmanNode']:
         return self.right
 
-    # check if node has left child -> return boolean
-    def has_left_child(self) -> bool:
-        return self.left != None
-    
-    # check if node has right child -> return boolean
-    def has_right_child(self) -> bool:
-        return self.right != None
-    
     def is_leaf(self) -> bool:
         return self.left is None and self.right is None
 
