@@ -158,7 +158,12 @@ def generate_huffman_codes(node: Optional[HuffmanNode], code: str, huffman_codes
     
     if node:
         if node.is_leaf() and node.char is not None:
-            huffman_codes[node.char] = code
+            # Special case: if this is the root node and it's a leaf (single character case)
+            # assign it a code of "0" to ensure it has a code
+            if code == "":  # This means we're at the root
+                huffman_codes[node.char] = "0"
+            else:
+                huffman_codes[node.char] = code
         else:
             code_left = code + "0"
             generate_huffman_codes(node.left, code_left, huffman_codes)
@@ -168,8 +173,6 @@ def generate_huffman_codes(node: Optional[HuffmanNode], code: str, huffman_codes
     return huffman_codes
             
 def huffman_encoding(data: str) -> tuple[str, Optional[HuffmanNode]]:
-
-    
     """
     Encode the given data using Huffman coding.
 
@@ -183,7 +186,19 @@ def huffman_encoding(data: str) -> tuple[str, Optional[HuffmanNode]]:
     Tuple[str, Optional[HuffmanNode]]
         A tuple containing the encoded string and the root of the Huffman Tree.
     """
+    if not data:
+        return ("", None)
+    
     frequency_dict = calculate_frequencies(data)
+    # Special case: if there's only one unique character
+    if len(frequency_dict) == 1:
+        char = list(frequency_dict.keys())[0]
+        # Create a single node tree
+        tree = HuffmanNode(frequency_dict[char], char)
+        # Encode using "0" for each occurrence of the character
+        encoded_string = "0" * len(data)
+        return (encoded_string, tree)
+
     tree = build_huffman_tree(frequency_dict)
     huffman_codes = generate_huffman_codes(tree, "", {})
 
@@ -210,18 +225,26 @@ def huffman_decoding(encoded_data: str, tree: Optional[HuffmanNode]) -> str:
     str
         The decoded string.
     """
+    if not encoded_data or tree is None:
+        return ""
+    
+    # Special case: single character tree (root is a leaf)
+    if tree.is_leaf():
+        # Each "0" in the encoded data represents one occurrence of the character
+        return tree.char * len(encoded_data) if tree.char else ""
     
     decoded: str = ""
     node = tree
 
     for code in encoded_data:
         if code == "0":
-            node = node.get_left_child()
+            node = node.get_left_child() if node else None
         elif code == "1":
-            node = node.get_right_child()
+            node = node.get_right_child() if node else None
         
-        if node.is_leaf():
-            decoded +=  node.char
+        if node and node.is_leaf():
+            if node.char is not None:
+                decoded += node.char
             node = tree
 
     return decoded
@@ -229,17 +252,7 @@ def huffman_decoding(encoded_data: str, tree: Optional[HuffmanNode]) -> str:
 # Main Function
 if __name__ == "__main__":
     # Test Case 1: Standard test case
-
-    print("\nTest Case 1: Standard sentence")
-    sentence = "Huffman coding is fun!"
-    encoded_data, tree = huffman_encoding(sentence)
-    print("Encoded:", encoded_data)
-    decoded_data = huffman_decoding(encoded_data, tree)
-    print("Decoded:", decoded_data)
-    assert sentence == decoded_data
-
-    # Test Case 2
-    print("\nTest Case 2: Standard sentence 2")
+    print("\nTest Case 1: Standard sentence 2")
     a_great_sentence = "The bird is the word"
 
     print(f"The size of the data is: {sys.getsizeof(a_great_sentence)}")
@@ -255,6 +268,20 @@ if __name__ == "__main__":
     print(f"The size of the decoded data is: {sys.getsizeof(decoded_data)}")
     print(f"The content of the encoded data is: {decoded_data}")
 
+    # Test Case 2
+    print("\nTest Case 2: Testing empty string input")
+    # Edge case: empty string
+    encoded, tree = huffman_encoding("")
+    assert encoded == ""
+    decoded = huffman_decoding(encoded, tree)
+    assert decoded == "", f"Failed: expected an empty string"
+
     # Test Case 3
-    print("\nTest Case 3: Testing empty string input")
+    print("\nTest Case 3: single character encoding")
+    s = "aaaaaa"
+    encoded, tree = huffman_encoding(s)
+    print(f"encoded is: {encoded}")
+    decoded = huffman_decoding(encoded, tree)
+    assert decoded == s, f"Failed: test 3, encoded = {encoded}, decoded = {decoded}"
+
     
