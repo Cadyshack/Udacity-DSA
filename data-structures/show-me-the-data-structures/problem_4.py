@@ -23,7 +23,7 @@ class Group:
         """
         self.name: str = _name
         self.groups: list[Group] = []
-        self.users: list[str] = []
+        self.users: set[str] = set()  # Use a set for O(1) lookup
 
     def add_group(self, group: 'Group') -> None:
         """
@@ -45,7 +45,7 @@ class Group:
         user : str
             The user to be added.
         """
-        self.users.append(user)
+        self.users.add(user)
 
     def get_groups(self) -> list['Group']:
         """
@@ -58,7 +58,7 @@ class Group:
         """
         return self.groups
 
-    def get_users(self) -> list[str]:
+    def get_users(self) -> set[str]:
         """
         Get the list of users in this group.
 
@@ -97,7 +97,7 @@ def is_user_in_group(user: str, group: Group) -> bool:
     bool
         True if the user is found in the group or any sub-group, False otherwise.
     """
-    if user is None:
+    if user is None or group is None:
         return False
 
     # Use a stack to implement an iterative depth-first search
@@ -133,7 +133,20 @@ if __name__ == "__main__":
     print(is_user_in_group("sub_child_user", parent))  # Expected output: True
 
     # Test Case 2
-    pass
+    print("Test Case 2")
+    print(is_user_in_group("nonexistent_user", parent))  # Expected output: False
 
     # Test Case 3
-    pass
+    print("Test Case 3")
+    parent.add_user("parent_user")
+    print(is_user_in_group("parent_user", parent))  # Expected output: True
+
+    print("Test Case 4")
+    print(is_user_in_group("", parent))  # Expected output: False
+
+    child.add_user("child_1")
+    child.add_user("child_2")
+    child.add_user("child_3")
+    print("Test Case 5")
+    print(is_user_in_group("child_2", sub_child)) # Expected output: False
+
