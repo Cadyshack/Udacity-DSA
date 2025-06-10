@@ -1,3 +1,25 @@
+# Problem 2: File Recursion
+
+For this problem, the goal is to write code for finding all files under a directory (and all directories beneath it) that end with ".c"
+An example `testdir` provided was added to this project folder in order to test our code.
+Here is the example test directory listing:
+```bash
+./testdir
+├── subdir1
+│   ├── a.c
+│   └── a.h
+├── subdir2
+├── subdir3
+│   └── subsubdir1
+│       ├── b.c
+│       └── b.h
+├── subdir4
+├── subdir5
+│   ├── a.c
+│   └── a.h
+├── t1.c
+└── t1.h
+```
 
 ## Reasoning Behind Decisions:
 
