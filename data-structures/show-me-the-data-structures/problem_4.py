@@ -97,7 +97,7 @@ def is_user_in_group(user: str, group: Group) -> bool:
     bool
         True if the user is found in the group or any sub-group, False otherwise.
     """
-    if user is None or group is None:
+    if not user or group is None:
         return False
 
     # Use a stack to implement an iterative depth-first search
@@ -129,24 +129,23 @@ if __name__ == "__main__":
     parent.add_group(child)
 
     # Test Case 1: User is in a nested subgroup
-    print("Test Case 1")
-    print(is_user_in_group("sub_child_user", parent))  # Expected output: True
+    assert is_user_in_group("sub_child_user", parent) == True, "Test Case 1 Failed"
 
-    # Test Case 2
-    print("Test Case 2")
-    print(is_user_in_group("nonexistent_user", parent))  # Expected output: False
+    # Test Case 2: User does not exist
+    assert is_user_in_group("nonexistent_user", parent) == False, "Test Case 2 Failed"
 
-    # Test Case 3
-    print("Test Case 3")
+    # Test Case 3: User is in the parent group
     parent.add_user("parent_user")
-    print(is_user_in_group("parent_user", parent))  # Expected output: True
+    assert is_user_in_group("parent_user", parent) == True, "Test Case 3 Failed"
 
-    print("Test Case 4")
-    print(is_user_in_group("", parent))  # Expected output: False
+    # Test Case 4: Empty user string
+    assert is_user_in_group("", parent) == False, "Test Case 4 Failed"
 
+    # Test Case 5: User is in child, not in sub_child
     child.add_user("child_1")
     child.add_user("child_2")
     child.add_user("child_3")
-    print("Test Case 5")
-    print(is_user_in_group("child_2", sub_child)) # Expected output: False
+    assert is_user_in_group("child_2", sub_child) == False, "Test Case 5 Failed"
+
+    print("All test cases passed.")
 
