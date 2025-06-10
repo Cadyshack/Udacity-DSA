@@ -1,6 +1,7 @@
 import os
+from typing import Optional
 
-def find_files(suffix: str, path: str) -> list[str]:
+def find_files(suffix: str, path: str) -> Optional[list[str]]:
     """
     Find all files beneath path with file name suffix.
 
@@ -29,7 +30,9 @@ def find_files(suffix: str, path: str) -> list[str]:
         for item in list_dir:
             new_path = os.path.join(path, item)
             if os.path.isdir(new_path):
-                output.extend(find_files(suffix, new_path))
+                sub_result = find_files(suffix, new_path)
+                if sub_result is not None:
+                    output.extend(sub_result)
             elif item.endswith(suffix):
                 output.append(new_path)
         
@@ -44,7 +47,7 @@ if __name__ == "__main__":
     
     result = find_files(".c", "./testdir")
     expected_result = ['./testdir/subdir1/a.c', './testdir/subdir3/subsubdir1/b.c', './testdir/subdir5/a.c', './testdir/t1.c']
-    assert sorted(result) == expected_result, f"Failed: expected following array: {expected_result} \n instead returned {result}"
+    assert result is not None and sorted(result) == expected_result, f"Failed: expected following array: {expected_result} \n instead returned {result}"
     print("Test Case 1 Passed: Standard directory structure")
 
     # Test Case 2: Searching for non existant file in directory
