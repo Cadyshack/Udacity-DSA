@@ -51,6 +51,7 @@ class LinkedList:
         Constructs all the necessary attributes for the LinkedList object.
         """
         self.head: Optional[Node] = None
+        self.tail: Optional[Node] = None
 
     def __str__(self) -> str:
         """
@@ -77,15 +78,18 @@ class LinkedList:
         value : int
             The value to be stored in the new node.
         """
+        new_node: Node = Node(value)
+        # If the linked list is empty, set the new node as the head
         if self.head is None:
-            self.head = Node(value)
-            return
-
-        node: Node = self.head
-        while node.next:
-            node = node.next
-
-        node.next = Node(value)
+            self.head = new_node
+            self.tail = new_node
+        else:
+            if self.tail is None:
+                self.tail = self.head
+            # If the linked list is not empty, append the new node to the end
+            assert self.tail is not None, "Tail should not be None when appending to a non-empty list."
+            self.tail.next = new_node
+            self.tail = new_node
 
     def size(self) -> int:
         """
@@ -225,10 +229,12 @@ if __name__ == "__main__":
     linked_list_6 = LinkedList()
     element_1 = [3, 2, 4, 35, 6, 65, 6, 4, 3, 21]
     element_2 = [3, 2, 4, 35, 6, 65, 6, 4, 3, 21]
+
     for i in element_1:
         linked_list_5.append(i)
     for i in element_2:
         linked_list_6.append(i)
+
     print("\nTest Case 3:")
     print("Union:", union(linked_list_5, linked_list_6)) # Expected: 2, 3, 4, 6, 21, 35, 65
     print("Intersection:", intersection(linked_list_5, linked_list_6)) # Expected: 2, 3, 4, 6, 21, 35, 65
@@ -238,10 +244,12 @@ if __name__ == "__main__":
     linked_list_8 = LinkedList()
     element_1 = [3, 2, 4, 35, 6, 65, 6, 4, 3, 21]
     element_2 = []
+
     for i in element_1:
         linked_list_7.append(i)
     for i in element_2:
         linked_list_8.append(i)
+
     print("\nTest Case 4:")
     print("Union:", union(linked_list_7, linked_list_8)) # Expected: 2, 3, 4, 6, 21, 35, 65
     print("Intersection:", intersection(linked_list_7, linked_list_8)) # Expected: empty
@@ -250,10 +258,12 @@ if __name__ == "__main__":
     linked_list_10 = LinkedList()
     element_1 = []
     element_2 = []
+
     for i in element_1:
         linked_list_9.append(i)
     for i in element_2:
         linked_list_10.append(i)
+
     print("\nTest Case 5:")
     print("Union:", union(linked_list_9, linked_list_10)) # Expected: empty
     print("Intersection:", intersection(linked_list_9, linked_list_10)) # Expected: empty
