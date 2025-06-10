@@ -1,3 +1,15 @@
+# Problem 1: Least Recently Used (LRU) Cache
+
+The goal is to design a data structure known as a Least Recently Used (LRU) cache. An LRU cache is a type of cache in which we remove the least recently used entry when the cache memory reaches its limit. For the current problem, we consider both `get` and `set` operations as a **use operation**.
+
+The specific task is to use an appropriate data structure(s) to implement the cache.
+
+- In case of a **cache hit**, the `get()` operation should return the appropriate value.
+- In case of a **cache miss**, the `get()` should return -1.
+- While putting an element in the cache, the `put()`/`set()` operation must insert the element. If the cache is full, we must write code that removes the least recently used entry first and then insert the element.
+
+All operations must take `O(1)` time.
+For this current problem, we consider the `size of cache = 5`.
 
 ## Reasoning Behind Decisions:
 
