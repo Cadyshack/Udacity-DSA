@@ -127,6 +127,8 @@ if __name__ == "__main__":
     blockchain.add_block("Block 1 Data")
     blockchain.add_block("Block 2 Data")
     blockchain.add_block("Block 3 Data")
+    assert len(blockchain.chain) == 3, "Blockchain should have 3 blocks"
+    assert blockchain.chain[1].previous_hash == blockchain.chain[0].hash, "Block 2 should reference Block 1"
     print(blockchain)
 
     # Test Case 2
@@ -144,6 +146,7 @@ if __name__ == "__main__":
     blockchain3.add_block("Block with special characters: !@#$%^&*()_+")
     print(blockchain3)
 
+    # Test Case 4
     print("Test Case 4: Create a blockchain without adding any blocks")
     blockchain4 = Blockchain()
     print(blockchain4)
