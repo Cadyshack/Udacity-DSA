@@ -22,7 +22,26 @@ def sqrt(number: int) -> int:
     Returns:
     int: Floored square root
     """
-    pass
+    if number == 0:
+        return 0
+    elif number == 1:
+        return 1
+    else:
+        start = 2
+        end = number
+        
+        while start <= end:
+            mid = (start + end) // 2
+            floor_value = mid ** 2
+            ceiling_value = (mid + 1) ** 2
+            if floor_value <= number < ceiling_value:
+                return mid
+            elif floor_value > number:
+                end = mid
+            elif floor_value < number:
+                start = mid
+
+    return -1
 
 if __name__ == "__main__":
     # Test cases
@@ -31,3 +50,4 @@ if __name__ == "__main__":
     print("Pass" if 4 == sqrt(16) else "Fail")  # Expected Output: Pass
     print("Pass" if 1 == sqrt(1) else "Fail")   # Expected Output: Pass
     print("Pass" if 5 == sqrt(27) else "Fail")  # Expected Output: Pass
+
