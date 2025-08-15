@@ -24,10 +24,10 @@ def sqrt(number: int) -> int:
     """
     if number == 0:
         return 0
-    elif number == 1:
+    elif number in [1, 2, 3] :
         return 1
     else:
-        start = 2
+        start = 0
         end = number
         
         while start <= end:
@@ -38,7 +38,7 @@ def sqrt(number: int) -> int:
                 return mid
             elif floor_value > number:
                 end = mid
-            elif floor_value < number:
+            else:   # floor_value < number
                 start = mid
 
     return -1
@@ -50,4 +50,7 @@ if __name__ == "__main__":
     print("Pass" if 4 == sqrt(16) else "Fail")  # Expected Output: Pass
     print("Pass" if 1 == sqrt(1) else "Fail")   # Expected Output: Pass
     print("Pass" if 5 == sqrt(27) else "Fail")  # Expected Output: Pass
+    print("Pass" if 1 == sqrt(3) else "Fail")  # Expected Output: Pass
+    print("Pass" if 2 == sqrt(4) else "Fail")  # Expected Output: Pass
+    print("Pass" if 3162 == sqrt(10000001) else "Fail") # Expected Output: Pass
 

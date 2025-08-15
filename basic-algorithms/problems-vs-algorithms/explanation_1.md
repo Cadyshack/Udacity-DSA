@@ -1,13 +1,8 @@
-<!--
-Problem 1: Square Root of an Integer
 
-Provide an explanation for your answer, clearly organizing your thoughts into 
-concise and easy-to-understand language.
+# Problem 1: Finding the Square Root of an Integer
 
-Focus on explaining the reasoning behind your decisions rather than giving a 
-detailed description of the code. For instance, why did you choose a particular 
-data structure? Additionally, discuss the efficiency of your solution in terms 
-of time and space complexity. If necessary, you can support your explanation 
-with code snippets or mathematical formulas. For guidance on how to write 
-formulas in markdown, refer to https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions.
--->
+Since we need to find the square root of a given integer by returning the floor value, and are asked to peform this operation in `O(log(n))` time, I chose to use a simple binary search algorithm to blindly search for this number. Binary search is performed in `O(log(n))`, therefore my solution is also performed in `O(log(n))`, with a space complexity of `O(1)`.
+
+First, I directly return the answer for the simple case of asking for square root of numbers 0-3. Otherwise, binary search is performed for all other numbers larger than 3. Therefore the time complexity for square root of numbers 0-3 is `O(1)`, while any larger number is `O(log(n))`, due to the need to perform a binary search.
+
+As the binary search is performed by finding the middle number between 0and number, I compare the square of this middle number to the number given. If squaring the middle number is equal to the number given, we have our answer and return this number. Otherwise, I look at the square of (middle + 1) in order to stop the binary search in case the actual square root is between the middle and middle + 1. So if square of middle number is lower than number, while square of middle + 1 is over, we know the answer lies somewhere between middle and middle + 1 (where the true answer is a rational number). Since we only need to return the floor value, we can safely return the middle number as the answer. Otherwise the binary search will continue by either setting the start to middle, or the end to middle, in essence cutting the numbers in half by rejecting all other numbers larger or smaller based on this comparison.
