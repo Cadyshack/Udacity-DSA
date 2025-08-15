@@ -25,10 +25,44 @@ def rotated_array_search(input_list: list[int], number: int) -> int:
     Returns:
     int: Index of the target number or -1 if not found
     """
-    pass
+    if len(input_list) == 0:
+        return -1
+
+    low = 0
+    high = len(input_list) - 1
+    while low < high:
+        mid = (low + high) // 2
+        if input_list[mid] > input_list[high]:
+            low = mid + 1
+        else:
+            high = mid
+    
+    # low is now set to the index of the smallest int a.k.a the pivot index
+    pivot = low
+    start = 0
+    end = len(input_list) - 1
+    
+    if number >= input_list[0]:
+        # the target is in the left sub array
+        end = pivot
+    else:
+        start = pivot
+
+    while start <= end:
+        mid = (start + end) // 2
+        mid_num = input_list[mid]
+
+        if number == mid_num:
+            return mid
+        elif number < mid_num:
+            end = mid - 1
+        else:
+            start = mid + 1
+    
+    return -1
 
 # Test function using provided test cases
-def test_function(test_case: list[list[int], int]) -> None:
+def test_function(test_case: tuple[list[int], int]) -> None:
     """
     Test the rotated_array_search function with a given test case.
 
@@ -66,17 +100,19 @@ def linear_search(input_list: list[int], number: int) -> int:
 
 if __name__ == '__main__':
     # Edge case: Empty input list
-    test_function([[], 5])
+    test_function(([], 5))
     # Expected output: Pass
 
     # Normal case: Number at the beginning of the list
-    test_function([[4, 5, 6, 7, 0, 1, 2], 4])
+    test_function(([4, 5, 6, 7, 0, 1, 2], 4))
     # Expected output: Pass
 
     # Normal case: Number at the end of the list
-    test_function([[4, 5, 6, 7, 0, 1, 2], 2])
+    test_function(([4, 5, 6, 7, 0, 1, 2], 2))
     # Expected output: Pass
 
     # Normal case: Number in the middle of the list
-    test_function([[4, 5, 6, 7, 0, 1, 2], 6])
+    test_function(([4, 5, 6, 7, 0, 1, 2], 6))
+    # Expected output: Pass
+    test_function(([10, 11, 12, 13, 14, 15, 16, 5, 6, 7, 8], 9))
     # Expected output: Pass
