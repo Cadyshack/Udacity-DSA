@@ -28,7 +28,38 @@ def rearrange_digits(input_list: list[int]) -> tuple[int, int]:
     tuple[int, int]: A tuple containing two integers formed by rearranging the 
     digits of the input list.
     """
-    pass
+    n = len(input_list)
+    # Start index represents the last non-leaf node, rather than start at n, since nodes beyond this point are leaves and already satidfy the heap property.
+    start_index = (n // 2) - 1
+
+    # Build a minheap
+    for i in range(start_index, -1, -1):
+        heapify(input_list, n, i)
+
+    # Extract minimum number then heapify one by one to create sorted descending order list
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(input_list, i, 0)
+
+    
+
+
+
+def heapify(arr: list[int], n: int, i: int) -> None:
+
+    min_index = i
+    left_child = 2 * i + 1
+    right_child = 2 * i + 2
+
+    if left_child < n and arr[i] > arr[left_child]:
+        min_index = left_child
+
+    if right_child < n and arr[min_index] > arr[right_child]:
+        min_index = right_child
+
+    if min_index != i:
+        arr[i], arr[min_index] = arr[min_index], arr[i]
+        heapify(arr, n, min_index)
 
 def test_function(test_case: tuple[list[int], list[int]]) -> None:
     """
@@ -50,19 +81,25 @@ def test_function(test_case: tuple[list[int], list[int]]) -> None:
     else:
         print("Fail")
 
-if __name__ == '__main__':
+
+arr = [3, -2, 1, -4, 5]
+rearrange_digits(arr)
+print(arr)
+
+
+# if __name__ == '__main__':
     # Edge case: Single element list
-    test_function(([9], [9, 0]))
+    # test_function(([9], [9, 0]))
     # Expected output: Pass
 
     # Normal case: Mixed positive and negative numbers
-    test_function(([3, -2, 1, -4, 5], [531, -42]))
+    # test_function(([3, -2, 1, -4, 5], [531, -42]))
     # Expected output: Pass
 
     # Normal case: list with zeros
-    test_function(([0, 0, 0, 0, 0], [0, 0]))
+    # test_function(([0, 0, 0, 0, 0], [0, 0]))
     # Expected output: Pass
 
     # Normal case: list with repeated numbers
-    test_function(([2, 2, 2, 2, 2], [222, 2]))
+    # test_function(([2, 2, 2, 2, 2], [222, 2]))
     # Expected output: Pass
