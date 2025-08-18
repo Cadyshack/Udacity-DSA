@@ -1,13 +1,9 @@
-<!--
-Problem 3: Rearrange Array Digits
 
-Provide an explanation for your answer, clearly organizing your thoughts into
-concise and easy-to-understand language.
+# Problem 3: Rearrange Array Digits
 
-Focus on explaining the reasoning behind your decisions rather than giving a 
-detailed description of the code. For instance, why did you choose a particular 
-data structure? Additionally, discuss the efficiency of your solution in terms 
-of time and space complexity. If necessary, you can support your explanation 
-with code snippets or mathematical formulas. For guidance on how to write 
-formulas in markdown, refer to https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions.
--->
+To solve this problem we first need to sort the unsorted list, then we need to move through the list in descending order where we concatenate the integers into two variables, which are then packaged as the final returned tuple representing maximum sum. By alternating between largest number added to num1 variable, then second largest added to num2 variable, and continuing on in this fashion, we guarantee the maximum sum of two numbers.
+
+The main issue is to decide on the sorting algorithm to use, which has a worst case time complexity of $O(n\log(n))$. Here I looked at the following possible algorithms to use: merge sort, quicksort, and heapsort. I decided to go with heapsort, because of the following reasons. Heapsort is sorting in place, which gives us a space complexity of `O(1)`, and it has a best/worst case time complexity of $O(n\log(n))$. Quicksort also sorts in place keeping the time complexity at `O(1)` but when dealing with fully sorted lists, it then has a worst case time complexity of $O(n^2)$ time complexity, and since some of our test cases had fully sorted arrays filled with the same number, this seemed like a less optimal solution than heapsort which guarantees the needed $O(n\log(n))$ time complexity regardless of if an array is already sorted. When comparing to merge sort, although merge sort satisfies the time complexity of $O(n\log(n))$, it has a worst space complexity of `O(n)` as opposed to our heapsort solution that has a space complexity of `O(1)`.
+
+**NOTE**
+I changed two provided test cases for this problem, because these test cases made no logical sense, and broke the required criteria for solving this problem. One such test case provided the array/solution [2, 2, 2, 2, 2] --> [222, 2], which is wrong, since the rule states the numbers returned have a number of digits differing by no more than one. You can't have an array of 5 items return a tuple where the first item is 3 digits and the second is 1 digit. Not sure how this made it through. The other issue was in the array/solution [3, -2, 1, -4, 5] --> [531, -42]. If we need to deal with negative numbers, then the proper solution would be [531, -24]. Since this made no sense, and no one can answer why this is in there, I simply made my code handle absolute values instead. The problem statement said to assume the numbers were in the range of [0, 9], which tells me they are positive integers. Furthermore, if we were to deal with negative numbers, then an explenation of various edge cases would need to be added to the problem statement. How would one deal with an array of 7 items where only one item is negative? Since we're concatenating the numbers, how would you concatenate the negative number to the positive number? Would we then break the rule where the numbers formed have a number of digits differing by no more than one? I simply fixed these test cases to comply with the given critera of the problem statement.
