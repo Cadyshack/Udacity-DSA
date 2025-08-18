@@ -92,8 +92,7 @@ def test_function(test_case: tuple[list[int], list[int]]) -> None:
         print("Pass")
     else:
         print("Fail")
-
-
+        
 
 if __name__ == '__main__':
     # Edge case: Single element list
