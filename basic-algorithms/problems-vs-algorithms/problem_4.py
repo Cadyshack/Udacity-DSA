@@ -26,7 +26,23 @@ def sort_012(input_list: list[int]) -> list[int]:
     Returns:
     list[int]: The sorted list with all 0s, followed by all 1s, and then all 2s.
     """
-    pass
+    left_index = 0
+    front = 0
+    right_index = len(input_list) - 1
+
+    while front <= right_index:
+        if input_list[front] == 0:
+            input_list[left_index], input_list[front] = input_list[front], input_list[left_index]
+            left_index += 1
+            front += 1
+        elif input_list[front] == 1:
+            front += 1
+        else:  # input_list[front] == 2
+            input_list[front], input_list[right_index] = input_list[right_index], input_list[front]
+            right_index -= 1
+
+    return input_list
+
 
 def test_function(test_case: list[list[int]]) -> None:
     """
