@@ -32,7 +32,8 @@ class RouteTrieNode:
         """
         Initialize a RouteTrieNode with an empty dictionary for children and no handler.
         """
-        pass
+        self.children = {}
+        self.handler: Optional[str] = None
 
 class RouteTrie:
     """
@@ -48,7 +49,8 @@ class RouteTrie:
         Args:
         root_handler (str): The handler for the root node.
         """
-        pass
+        self.root = RouteTrieNode()
+        self.root.handler = root_handler
 
     def insert(self, path_parts: list[str], handler: str) -> None:
         """
@@ -58,7 +60,12 @@ class RouteTrie:
         path_parts (list[str]): A list of parts of the route.
         handler (str): The handler for the route.
         """
-        pass
+        current = self.root
+        for part in path_parts:
+            if part not in current.children:
+                current.children[part] = RouteTrieNode()
+            current = current.children[part]
+        current.handler = handler
 
     def find(self, path_parts: list[str]) ->  Optional[str]:
         """
@@ -70,7 +77,12 @@ class RouteTrie:
         Returns:
         str or None: The handler for the route if found, otherwise None.
         """
-        pass
+        current = self.root
+        for part in path_parts:
+            if part not in current.children:
+                return None
+            current = current.children[part]
+        return current.handler
 
 class Router:
     """
@@ -88,7 +100,8 @@ class Router:
         root_handler (str): The handler for the root route.
         not_found_handler (str): The handler for routes that are not found.
         """
-        pass
+        self.route_trie = RouteTrie(root_handler)
+        self.not_found_handler = not_found_handler
 
     def add_handler(self, path: str, handler: str) -> None:
         """
@@ -98,7 +111,10 @@ class Router:
         path (str): The route path.
         handler (str): The handler for the route.
         """
-        pass
+        path_parts = self.split_path(path)
+        if not path_parts:
+            raise ValueError("Path cannot be empty")
+        self.route_trie.insert(path_parts, handler)
 
     def lookup(self, path: str) -> str:
         """
@@ -110,7 +126,11 @@ class Router:
         Returns:
         str: The handler for the route if found, otherwise the not-found handler.
         """
-        pass
+        path_parts = self.split_path(path)
+        if not path_parts:
+            return self.not_found_handler
+        handler = self.route_trie.find(path_parts)
+        return handler if handler is not None else self.not_found_handler
 
     def split_path(self, path: str) -> list[str]:
         """
@@ -122,7 +142,10 @@ class Router:
         Returns:
             List[str]: A list of parts of the path.
         """
-        pass
+        if not path or path == "/":
+            return []
+        # Split the path by '/' and filter out empty parts
+        return [part for part in path.split("/") if part]
 
 if __name__ == '__main__':
     # create the router and add a route
