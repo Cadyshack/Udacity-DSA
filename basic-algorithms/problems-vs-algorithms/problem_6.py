@@ -24,7 +24,19 @@ def get_min_max(ints: list[int]) -> Optional[tuple[int, int]]:
     Optional[tuple[int, int]]: A tuple containing the minimum and maximum 
     integer, or None if the list is empty
     """
-    pass
+    if ints is None or len(ints) == 0:
+        return None
+
+    min_val = ints[0]
+    max_val = ints[0]
+    
+    for i in range(1, len(ints)):
+        if ints[i] < min_val:
+            min_val = ints[i]
+        if ints[i] > max_val:
+            max_val = ints[i]
+
+    return (min_val, max_val)
 
 if __name__ == '__main__':
     # Edge case: Empty input list
