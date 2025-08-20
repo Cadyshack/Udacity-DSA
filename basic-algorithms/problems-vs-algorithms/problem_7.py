@@ -112,8 +112,10 @@ class Router:
         handler (str): The handler for the route.
         """
         path_parts = self.split_path(path)
+
         if not path_parts:
             raise ValueError("Path cannot be empty")
+        
         self.route_trie.insert(path_parts, handler)
 
     def lookup(self, path: str) -> str:
@@ -127,8 +129,10 @@ class Router:
         str: The handler for the route if found, otherwise the not-found handler.
         """
         path_parts = self.split_path(path)
+
         if not path_parts:
             return self.not_found_handler
+        
         handler = self.route_trie.find(path_parts)
         return handler if handler is not None else self.not_found_handler
 
@@ -144,6 +148,7 @@ class Router:
         """
         if not path or path == "/":
             return []
+        
         # Split the path by '/' and filter out empty parts
         return [part for part in path.split("/") if part]
 

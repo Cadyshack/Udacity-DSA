@@ -1,20 +1,7 @@
-<!--
-Problem 4: Dutch National Flag Problem
-
-Provide an explanation for your answer, clearly organizing your thoughts into
-concise and easy-to-understand language.
-
-Focus on explaining the reasoning behind your decisions rather than giving a 
-detailed description of the code. For instance, why did you choose a particular 
-data structure? Additionally, discuss the efficiency of your solution in terms 
-of time and space complexity. If necessary, you can support your explanation 
-with code snippets or mathematical formulas. For guidance on how to write 
-formulas in markdown, refer to https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions.
--->
 
 # Problem 4: Dutch National Flag Problem
 
-To solve teh Dutch National Flag Problem, we implemented the Dutch National Flag algorithm. The Dutch National Flag algorithm is a classic algorithm proposed by Edsger Dijkstra. Its purpose is to sort an array containint three distinct elements (0, 1, and 2 in our case) in a single pass, efficiently grouping all elements of the same kind together. The algorithm works by keeping track of three pointers:
+To solve the Dutch National Flag Problem, we implemented the Dutch National Flag algorithm. The Dutch National Flag algorithm is a classic algorithm proposed by Edsger Dijkstra. Its purpose is to sort an array containing three distinct elements (0, 1, and 2 in our case) in a single pass, efficiently grouping all elements of the same kind together. The algorithm works by keeping track of three pointers:
 
 - **left_index**: marks the boundary for the lowest value (i.e 0)
 - **front_index**: traverses the array
