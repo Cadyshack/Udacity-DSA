@@ -28,6 +28,14 @@ def rearrange_digits(input_list: list[int]) -> tuple[int, int]:
     tuple[int, int]: A tuple containing two integers formed by rearranging the 
     digits of the input list.
     """
+    # Validate input_list is a list
+    if not isinstance(input_list, list):
+        raise TypeError("input_list must be of type list.")
+
+    # Validate all elements in input_list are integers
+    if not all(isinstance(x, int) for x in input_list):
+        raise ValueError("All elements in input_list must be integers.")
+
     n = len(input_list)
     if n == 0:
         return (0, 0)
@@ -110,3 +118,23 @@ if __name__ == '__main__':
     # Normal case: list with repeated numbers
     test_function(([2, 2, 2, 2, 2], [222, 22]))
     # Expected output: Pass
+
+    test_function(([], [0, 0]))
+    # Expected output: Pass
+
+    # Array of edge cases that should all raise an error that are run in the try
+    err_val = [
+        ([None], [0, 0]),
+        ([1, "2", 3, 4, 5], [531, 42]),
+        (984, [94,8])
+    ]
+
+    # Run through the edge cases and print out the error message for each to confirm proper error handling
+    for edge_case in err_val:
+        try:
+            test_function(edge_case)
+            print(f"Pass: {edge_case} did not raise an error and passed the test")
+        except ValueError as e:
+            print(f"Input {edge_case}: Failed with ValueError - {e}")
+        except TypeError as e:
+            print(f"Input {edge_case}: Failed with TypeError - {e}")
