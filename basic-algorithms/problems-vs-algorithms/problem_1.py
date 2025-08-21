@@ -22,10 +22,24 @@ def sqrt(number: int) -> int:
     Returns:
     int: Floored square root
     """
+    
+    if number is None:
+        raise ValueError("Input cannot be None")
+    
+    if not isinstance(number, (int, float)):
+        raise TypeError(f"Input must be a number, got {type(number).__name__} instead")
+    
+    if number < 0:
+        raise ValueError("You cannot input a negative number")
+    
+
     if number == 0:
         return 0
-    elif number in [1, 2, 3] :
+    
+    if number in [1, 2, 3] :
         return 1
+    
+
     else:
         start = 0
         end = number
@@ -43,6 +57,8 @@ def sqrt(number: int) -> int:
 
     return -1
 
+
+
 if __name__ == "__main__":
     # Test cases
     print("Pass" if 3 == sqrt(9) else "Fail")   # Expected Output: Pass
@@ -54,3 +70,13 @@ if __name__ == "__main__":
     print("Pass" if 2 == sqrt(4) else "Fail")  # Expected Output: Pass
     print("Pass" if 3162 == sqrt(10000001) else "Fail") # Expected Output: Pass
 
+    # Testing edge cases where I chose to raise an error for any of these cases found in the error_values array.
+    error_values = ["", -5, "abc", None]
+    for test_value in error_values:
+        try:
+            result = sqrt(test_value)
+            print(f"Input {test_value}: Success, result = {result}")
+        except ValueError as e:
+            print(f"Input {test_value}: Failed with ValueError - {e}")
+        except TypeError as e:
+            print(f"Input {test_value}: Failed with TypeError - {e}")
