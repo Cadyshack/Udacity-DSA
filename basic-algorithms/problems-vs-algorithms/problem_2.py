@@ -25,6 +25,19 @@ def rotated_array_search(input_list: list[int], number: int) -> int:
     Returns:
     int: Index of the target number or -1 if not found
     """
+    
+    # Validate input_list is a list
+    if not isinstance(input_list, list):
+        raise TypeError("input_list must be of type list.")
+
+    # Validate all elements in input_list are integers
+    if not all(isinstance(x, int) for x in input_list):
+        raise ValueError("All elements in input_list must be integers.")
+
+    # Validate number is an integer
+    if not isinstance(number, int):
+        raise TypeError("number must be an integer.")
+    
     if len(input_list) == 0:
         return -1
 
@@ -114,5 +127,30 @@ if __name__ == '__main__':
     # Normal case: Number in the middle of the list
     test_function(([4, 5, 6, 7, 0, 1, 2], 6))
     # Expected output: Pass
+
     test_function(([10, 11, 12, 13, 14, 15, 16, 5, 6, 7, 8], 9))
     # Expected output: Pass
+
+    test_function(([0, 1, 2, 3, 4, 5, 6, -5, -4, -3, -2, -1], -3))
+    # Expected output: Pass
+
+    test_index = rotated_array_search([0, 1, 2, 3, 4, 5, 6, -5, -4, -3, -2, -1], -3)
+    print(f"test value is: {test_index}")
+    # Expected ouput: "test value is: 9"
+
+    # Array of edge cases that should all raise an error that are run in the try
+    err_val = [
+        ([None], 8),
+        ([4,5,6,0,1,2], None),
+        ([4,5,"6",0,1,2], 1)
+        ]
+    
+    # Run through the array of edge cases and print out the raised error for each to validate proper error handling
+    for edge_case in err_val:
+        try:
+            test_function(edge_case)
+            print(f"Pass: {edge_case} did not raise an error and passed the test")
+        except ValueError as e:
+            print(f"Input {edge_case}: Failed with ValueError - {e}")
+        except TypeError as e:
+            print(f"Input {edge_case}: Failed with TypeError - {e}")
