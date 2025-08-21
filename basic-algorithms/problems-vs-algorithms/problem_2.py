@@ -138,7 +138,7 @@ if __name__ == '__main__':
     print(f"test value is: {test_index}")
     # Expected ouput: "test value is: 9"
 
-    # Array of edge cases that should all raise an error that are run in the try
+    # Array of edge cases that should all raise an error
     err_val = [
         ([None], 8),
         ([4,5,6,0,1,2], None),
