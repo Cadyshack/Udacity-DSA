@@ -43,6 +43,14 @@ if __name__ == '__main__':
     print(get_min_max([]))
     # Expected output: None
 
+    # Edge case: Only one number in array
+    print(get_min_max([10]))
+    # Expected output: (10, 10)
+
+    # Edge case: None entered as input
+    print(get_min_max(None))
+    # Expected output: None
+
     # Normal case: list with negative and positive numbers
     print(get_min_max([-10, 0, 10, -20, 20]))
     # Expected output: (-20, 20)
