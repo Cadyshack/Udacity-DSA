@@ -50,7 +50,8 @@ class RouteTrie:
         root_handler (str): The handler for the root node.
         """
         self.root = RouteTrieNode()
-        self.root.handler = root_handler
+        self.root.children["/"] = RouteTrieNode()  # Root node for the root path
+        self.root.children["/"].handler = root_handler  # Set the handler for the root
 
     def insert(self, path_parts: list[str], handler: str) -> None:
         """
@@ -146,16 +147,21 @@ class Router:
         Returns:
             List[str]: A list of parts of the path.
         """
-        if not path or path == "/":
+        if not path:
             return []
+        elif path == "/":
+            return ["/"]
         
         # Split the path by '/' and filter out empty parts
-        return [part for part in path.split("/") if part]
+        none_root_paths = [part for part in path.split("/") if part]
+        paths = ["/"] + none_root_paths
+        return paths
 
 if __name__ == '__main__':
     # create the router and add a route
     router = Router("root handler", "not found handler")
     router.add_handler("/home/about", "about handler")
+    router.add_handler("/contact/us", "contact us")
 
     # Edge case: Empty path
     print(router.lookup(""))
@@ -172,3 +178,18 @@ if __name__ == '__main__':
     # Normal case: Path with exact match
     print(router.lookup("/home/about"))
     # Expected output: 'about handler'
+
+    print(router.lookup("/home/about/"))
+    # Expected output: 'about handler'
+
+    print(router.lookup("/"))
+    # Expected output: 'root handler'
+
+    print(router.lookup("/contact"))
+    # Expected output: 'not found handler'
+
+    # Adding a path handler to an a node section of an already created path "/contact/us"
+    router.add_handler("/contact", "contact page")
+
+    print(router.lookup("/contact"))
+    # Expeced output: 'contact page'
