@@ -163,10 +163,6 @@ if __name__ == '__main__':
     router.add_handler("/home/about", "about handler")
     router.add_handler("/contact/us", "contact us")
 
-    # Edge case: Empty path
-    print(router.lookup(""))
-    # Expected output: 'not found handler'
-
     # Normal case: Path not found
     print(router.lookup("/home/contact"))
     # Expected output: 'not found handler'
@@ -179,17 +175,29 @@ if __name__ == '__main__':
     print(router.lookup("/home/about"))
     # Expected output: 'about handler'
 
+    # Normal case: Path with exact match with trailing slash
     print(router.lookup("/home/about/"))
     # Expected output: 'about handler'
 
+    # Normal case: Root Path
     print(router.lookup("/"))
     # Expected output: 'root handler'
 
+    # Edge case: path with no handler attached, but present as a prefix to full path with handler
     print(router.lookup("/contact"))
     # Expected output: 'not found handler'
 
     # Adding a path handler to an a node section of an already created path "/contact/us"
     router.add_handler("/contact", "contact page")
-
+    
+    # Edge case: path added above, should now return handler
     print(router.lookup("/contact"))
     # Expeced output: 'contact page'
+
+    # Edge case: Empty path
+    print(router.lookup(""))
+    # Expected output: 'not found handler'
+
+    # Edge case: path with irregular user input
+    print(router.lookup("//home///about/"))
+    # Expected outpout: 'about handler'
