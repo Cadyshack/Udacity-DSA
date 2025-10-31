@@ -87,9 +87,11 @@ def show_map(M: Map, start: Optional[int] = None, goal: Optional[int] = None, pa
             size=10,
             colorbar=dict(
                 thickness=15,
-                title='Node Connections',
-                xanchor='left',
-                titleside='right'
+                title=dict(
+                    text="Node Connections",
+                    side='right'
+                ),
+                xanchor='left'
             ),
             line=dict(width=2)))
     for node in G.nodes():
@@ -112,8 +114,12 @@ def show_map(M: Map, start: Optional[int] = None, goal: Optional[int] = None, pa
 
     fig = Figure(data=Data([edge_trace, node_trace]),
                  layout=Layout(
-                    title='<br>Network graph made with Python',
-                    titlefont=dict(size=16),
+                    title = dict(
+                        text='<br>Network graph made with Python',
+                        font=dict(
+                            size=16
+                            )
+                    ),
                     showlegend=False,
                     hovermode='closest',
                     margin=dict(b=20,l=5,r=5,t=40),
