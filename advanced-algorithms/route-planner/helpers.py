@@ -2,7 +2,8 @@ import networkx as nx
 import pickle
 import chart_studio.plotly as py
 import random
-from plotly.graph_objs import Data, Figure, Layout, Line, Marker, Scatter, XAxis, YAxis
+from plotly.graph_objs import Figure, Layout, Scatter
+from plotly.graph_objs.scatter import Line, Marker
 from plotly.offline import init_notebook_mode, iplot
 from typing import Optional
 
@@ -112,7 +113,7 @@ def show_map(M: Map, start: Optional[int] = None, goal: Optional[int] = None, pa
         node_info = "Intersection " + str(node)
         node_trace['text'] = node_trace['text'] + (node_info,)
 
-    fig = Figure(data=Data([edge_trace, node_trace]),
+    fig = Figure(data=[edge_trace, node_trace],
                  layout=Layout(
                     title = dict(
                         text='<br>Network graph made with Python',
@@ -124,7 +125,7 @@ def show_map(M: Map, start: Optional[int] = None, goal: Optional[int] = None, pa
                     hovermode='closest',
                     margin=dict(b=20,l=5,r=5,t=40),
                    
-                    xaxis=XAxis(showgrid=False, zeroline=False, showticklabels=False),
-                    yaxis=YAxis(showgrid=False, zeroline=False, showticklabels=False)))
+                    xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                    yaxis=dict(showgrid=False, zeroline=False, showticklabels=False)))
 
     iplot(fig)
