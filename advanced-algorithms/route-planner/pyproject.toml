@@ -1,0 +1,16 @@
+[project]
+name = "route-planner"
+version = "0.1.0"
+description = "A* Algorithm implementation for finding shortest path in a Graphuv pythob "
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "chart-studio>=1.1.0",
+    "networkx>=3.5",
+    "plotly>=6.4.0",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.1.0",
+]
