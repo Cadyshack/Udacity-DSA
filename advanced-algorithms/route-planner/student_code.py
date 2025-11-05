@@ -79,12 +79,3 @@ def shortest_path(M: Map, start: int, goal: int) -> Optional[list[int]]:
 
     return None
 
-
-
-
-
-
-    pass
-
-
-
