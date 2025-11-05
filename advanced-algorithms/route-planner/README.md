@@ -2,6 +2,8 @@
 
 The purpose of this project is to implement the A* Algorithm to find the shortest path between two intersections in a graph.
 
+**NOTE:** The code written by myself is all contained inside the **student_code.py** file. Essentially consists of three functions that perform the A* algorithm returning a list of nodes that consist of the shortest path between two nodes.
+
 
 ## Project Dependencies:
 
